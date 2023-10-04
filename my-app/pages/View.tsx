@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
+import Table from '../components/Table';
 
 export async function getServerSideProps(context) {
   const missionID = context.query.mission;
@@ -13,16 +14,20 @@ export async function getServerSideProps(context) {
 }
 
 export default function View({data}) {
-  console.log(data)
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const mission = searchParams?.get("mission")
-  const category = searchParams?.get("category")
+  const flatData: {}[] = [];
+  data.cat[0].locations[0].items.forEach(item => {
+    flatData.push({
+      type: item.type,
+      name: item.name,
+      value: item.value
+    })
+  })
+    
   
   return (
     <div>
       <Navbar/>
-      <p>{mission}</p>
+      <Table data={flatData}/>
     </div>
   )
 }
