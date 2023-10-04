@@ -10,11 +10,11 @@ export default function Navbar() {
         return pathname + "?" + params.toString()
     }
   return (
-    <nav>
-      <Link href={getUrl("category1")}>category1</Link>
-      <Link href={getUrl("category2")}>category2</Link>
-      <Link href={getUrl("category3")}>category3</Link>
-      <Link href={getUrl("category4")}>category4</Link>
+    <nav className='border-b-2 border-gray-500 transition-colors duration-500 ease-in-out hover:border-pink pb-2'>
+      <Link href={getUrl("category1")} className='link'>category1</Link>
+      <Link href={getUrl("category2")} className='link'>category2</Link>
+      <Link href={getUrl("category3")} className='link'>category3</Link>
+      <Link href={getUrl("category4")} className='link'>category4</Link>
     </nav>
   )
 }

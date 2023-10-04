@@ -2,7 +2,7 @@ import Navbar from '../components/Navbar'
 import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
 
-export default function Page() {
+export default function View() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const mission = searchParams?.get("mission")

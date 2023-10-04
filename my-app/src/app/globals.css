@@ -3,25 +3,38 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  @apply bg-background text-white
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+.btn{
+  @apply w-36 h-10 rounded-md
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.btn-primary{
+  @apply btn text-black font-bold bg-green transition-all duration-500 ease-in-out 
 }
+.btn-primary:active{
+  @apply scale-95 ease-out
+}
+.btn-primary:hover{
+  @apply bg-green-dark
+}
+
+.btn-secondary{
+  @apply btn text-pink bg-transparent border border-pink transition-all duration-500 ease-in-out 
+}
+.btn-secondary:active{
+  @apply scale-95 ease-out
+}
+.btn-secondary:hover{
+  @apply bg-pink text-black font-bold
+}
+
+.link{
+  @apply mx-2 text-white text-2xl font-semibold transition-all duration-500 ease-in-out 
+}
+.link:hover{
+  @apply text-pink
+}
+
+
