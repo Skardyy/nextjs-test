@@ -1,0 +1,83 @@
+{
+    "missions" : [
+        {
+            "id" : "mission1",
+            "cat" : [
+                {
+                    "id" : "cat1",
+                    "types" : [
+                        {
+                            "id" : "type1",
+                            "value" : 15
+                        },
+                        {
+                            "id" : "type2",
+                            "value" : 30
+                        },
+                        {
+                            "id" : "type3",
+                            "value" : 15
+                        },
+                        {
+                            "id" : "type4",
+                            "value" : 40
+                        }
+                    ],
+                    "locations" : [
+                        {
+                            "id" : "location1",
+                            "items" : [
+                                {
+                                    "type" : "type1",
+                                    "value" : false,
+                                    "name" : "item1"
+                                },
+                                {
+                                    "type" : "type1",
+                                    "value" : true,
+                                    "name" : "item2"
+                                },
+                                {
+                                    "type" : "type1",
+                                    "value" : false,
+                                    "name" : "item3"
+                                },
+                                {
+                                    "type" : "type2",
+                                    "value" : true,
+                                    "name" : "item4"
+                                },
+                                {
+                                    "type" : "type3",
+                                    "value" : true,
+                                    "name" : "item5"
+                                },
+                                {
+                                    "type" : "type3",
+                                    "value" : true,
+                                    "name" : "item6"
+                                },
+                                {
+                                    "type" : "type3",
+                                    "value" : false,
+                                    "name" : "item7"
+                                },
+                                {
+                                    "type" : "type4",
+                                    "value" : false,
+                                    "name" : "item8"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }, 
+        {
+            "id" : "fake",
+            "cat" : [
+                
+            ]
+        }
+    ]
+}
