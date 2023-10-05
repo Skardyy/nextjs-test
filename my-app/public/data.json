@@ -28,7 +28,7 @@
                             "id" : "location1",
                             "items" : [
                                 {
-                                    "type" : "type1",
+                                    "type" : "type4",
                                     "value" : false,
                                     "name" : "item1"
                                 },
@@ -63,7 +63,7 @@
                                     "name" : "item7"
                                 },
                                 {
-                                    "type" : "type4",
+                                    "type" : "type1",
                                     "value" : false,
                                     "name" : "item8"
                                 }

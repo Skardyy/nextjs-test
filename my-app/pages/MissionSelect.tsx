@@ -1,7 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: any) {
   const res = await fetch(`http://localhost:3000/api/missions`);
   const data = await res.json()
 
@@ -10,7 +10,7 @@ export async function getServerSideProps(context) {
   }
 }
 
-export default function MissionSelect({data}:any) {
+export default function MissionSelect(data: string[]) {
   const router = useRouter()
   const confirmClick = () => {
       const mission = document.getElementById("mission") as HTMLSelectElement;

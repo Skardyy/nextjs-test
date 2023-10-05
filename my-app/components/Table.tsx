@@ -1,42 +1,38 @@
-import { AgGridReact } from "ag-grid-react"
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import { DataGrid } from "@mui/x-data-grid"
 
+interface Props {
+    typeList: {  
+        id: string
+        typeValue: number
+        items: {
+            value: boolean
+            name: string
+        }[] 
+    }[]
+}
 
-export default function Table({data}) {
+export default function Table({typeList}: Props) {
 
-    console.log(data)
-    const gridOptions = {
-        columnDefs: [
-            { field: 'type', cellDataType: 'text', rowGroup: true},
-            { field: 'name', cellDataType: 'text'},
-            { field: 'value', cellDataType: 'boolean'}
-        ],
-        rowData: data,
-        defaultColDef: {
-            flex: 1,
-            minWidth: 100,
-            sortable: true,
-            resizable: true,
-        },
-        autoGroupColumnDef: {
-            headerName: "type",
-            field: "type",
-            cellRenderer: 'agGroupCellRenderer',
-            minWidth: 200,
-            cellRendererParams: {
-                checkbox: true,
-            },
-        },
-        groupDisplayType: "singleColumn",
-        animateRows: true,
-    }
+    console.log(typeList)
+    const columns = [
+        {field: "id", headerName: "name", width: 200},
+        {
+            field: "items",
+            headerName: "values",
+            width: 200,
+            renderCell: (paramas: any) => (
+                <ul>
+                    {(paramas.value as any[]).map(item => ( 
+                        <li key={item.name}>{item.name} : {item.value}</li>
+                        ))}
+                </ul>
+            )
+        }
+    ]
 
     return(
-        <div className="w-screen h-96 ag-theme-alpine-dark">
-            <AgGridReact
-                gridOptions={gridOptions}
-                />
+        <div>
+            <DataGrid rows={typeList} columns={columns} />            
         </div>
     )
 }
