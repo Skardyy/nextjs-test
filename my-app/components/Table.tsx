@@ -1,7 +1,10 @@
 import { DataTable, DataTableExpandedRows, DataTableRowToggleEvent } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import { Column, ColumnEditorOptions } from 'primereact/column';
 import { useState } from 'react';
 import React from 'react';
+import { InputText } from 'primereact/inputtext';
+import { InputSwitch } from 'primereact/inputswitch';
+        
         
 
 interface Props {
@@ -28,10 +31,10 @@ export default function Table({types, location}: Props) {
     const [expandedRows, setExpandedRows] = useState<DataTableExpandedRows | Item[]>([]);
     const [items, setItems] = useState<Item[]>(location.items);
     let count = (type: string): number => {
-        return location.items.reduce((acc, val) => (val.type == type ? acc++ : acc), 0)
+        return location.items.reduce((acc, val) => (val.type == type ? acc + 1 : acc), 0)
     }
     let falseCount = (type: string): number => {
-        return location.items.reduce((acc, val) => (val.type == type && val.value == false ? acc++ : acc), 0)
+        return location.items.reduce((acc, val) => (val.type == type && val.value == false ? acc + 1 : acc), 0)
     }
     const headerTemplate = (data:Item) => {
         return (
@@ -44,7 +47,7 @@ export default function Table({types, location}: Props) {
         let c = count(data.type)
         let fc = falseCount(data.type)
         let done = c-fc
-        let donePrec = (done/c) * 100.0
+        let donePrec = (done/c) * 100.0 + "%"
         return (
             <React.Fragment>
                 <td colSpan={5}>
@@ -54,31 +57,47 @@ export default function Table({types, location}: Props) {
         );
     };
     const flagTemplate = (data:Item) => {
-        return (
-            <React.Fragment>
-                <input type='checkbox' checked={data.value}></input>
-            </React.Fragment>
-        );
+        return data.value
     };
-    const onToggle = ((e:DataTableRowToggleEvent) => {
-        if (expandedRows.includes(e.data)) {
-          setExpandedRows(expandedRows.filter(row => row !== e.data));
-        } else {
-          setExpandedRows([...expandedRows, e.data]);
-        }
-      })
+    const onCellEditComplete = (e: any) => {
+        let { rowData, newValue, field, originalEvent: event } = e;
 
+        switch (field) {
+            case "value":
+                rowData[field] = newValue
+                break;
+            default:
+                if (newValue.trim().length > 0) rowData[field] = newValue;
+                else event.preventDefault();
+                break;
+        }
+    };
+    const cellEditor = (options: ColumnEditorOptions) => {
+        if (options.field === 'value') return flagEditor(options);
+        else return nameEditor(options);
+    };
+
+    const nameEditor = (options: ColumnEditorOptions) => {
+        return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback!(e.target.value)} />;
+    };
+
+    const flagEditor = (options: ColumnEditorOptions) => {
+        return <InputSwitch checked={options.value} onChange={(e) => {options.editorCallback!(e.value)}}/>;
+    };
+
+    
     return(
         <DataTable value={items}
-        sortField='type'
+        sortField='type' dataKey='name' editMode="cell" key="type"
+        onError={() => {}}
         rowGroupMode="subheader" groupRowsBy="type"
         expandableRowGroups expandedRows={expandedRows} onRowToggle={(e: DataTableRowToggleEvent) => setExpandedRows(e.data)}
         rowGroupHeaderTemplate={headerTemplate} rowGroupFooterTemplate={footerTemplate}
         size="small"
         emptyMessage="No entry found.">
-            <Column header="#" headerStyle={{ width: '3rem' }} body={(data, options) => options.rowIndex + 1}></Column>
-            <Column field="name" header="name" filter sortable></Column>
-            <Column field="value" header="value" filter sortable body={flagTemplate}></Column>
+            <Column key="field" header="#" headerStyle={{ width: '3rem' }} body={(data, options) => options.rowIndex + 1}></Column>
+            <Column key="name" field="name" header="name" filter sortable onCellEditComplete={onCellEditComplete} editor={(options) => cellEditor(options)}></Column>
+            <Column key="value" field="value" header="value" filter sortable body={flagTemplate} onCellEditComplete={onCellEditComplete} editor={(options) => cellEditor(options)}></Column>
         </DataTable>
     )
 }
