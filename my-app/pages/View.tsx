@@ -34,41 +34,13 @@ export async function getServerSideProps(context: any) {
   }
 }
 
-interface location {
-  locationName: string
-  typeList: {  
-    id: string
-    typeValue: number
-    items: {
-      value: boolean
-      name: string
-    }[] 
-  }[]
-}
-
 export default function View({data}: serverProps) {
-  const locationList: location[] = []
-  data.cat[0].locations.forEach(location => {
-    let typeList: {}[] = []
-    data.cat[0].types.forEach(type => {
-      typeList.push({
-        id: type.id,
-        typeValue: type.value,
-        items: location.items.filter(item => {if(item.type == type.id){return item}})
-      })
-    })
-    let mLocation = {
-      locationName: location.id,
-      typeList: typeList,
-    } as location
-    locationList.push(mLocation)
-  })
-
+  const cat = data.cat[0]
   return (
     <div>
       <Navbar/>
-      {locationList.map(data => (
-        <Table key={data.locationName} typeList={data.typeList}/>
+      {cat.locations.map(data => (
+        <Table key={data.id} location={data} types={cat.types}/>
       ))}
     </div>
   )

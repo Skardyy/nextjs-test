@@ -10,7 +10,11 @@ export async function getServerSideProps(context: any) {
   }
 }
 
-export default function MissionSelect(data: string[]) {
+interface Props {
+  data: string[]
+}
+
+export default function MissionSelect({data}: Props) {
   const router = useRouter()
   const confirmClick = () => {
       const mission = document.getElementById("mission") as HTMLSelectElement;
